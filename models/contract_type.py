@@ -34,6 +34,7 @@ class ContractInherit(models.Model):
     nbr_travaille = fields.Integer(string="Nombre de jour travaillés")
     currency = fields.Many2one('res.currency', string="Devise", default=0)
     inherit_partner_values = fields.Boolean(string="Inherit Partner Values", default=True)
+    wage=fields.Monetary(string="salaire de base")
 
     @api.onchange('cjm', 'nbr_travaille', 'taux_charge', 'inherit_partner_values')
     def _onchange_cout(self):
