@@ -31,7 +31,7 @@ class ContractInherit(models.Model):
     salaire_annuel = fields.Monetary('Salaire annuel (brut)', currency_field='currency')
     salaire_souhait = fields.Monetary("Salaire brut souhaité", default=0, currency_field='currency')
     taux_charge = fields.Float(string="Taux de charge")
-    nbr_travaille = fields.Float(string="Nombre de jour travaillés")
+    nbr_travaille = fields.Integer(string="Nombre de jour travaillés")
     currency = fields.Many2one('res.currency', string="Devise", default=0)
     inherit_partner_values = fields.Boolean(string="Inherit Partner Values", default=True)
     wage = fields.Monetary(string="salaire de base")
@@ -45,7 +45,7 @@ class ContractInherit(models.Model):
     @api.onchange('cjm', 'nbr_travaille', 'taux_charge')
     def _onchange_cout(self):
         for record in self:
-            if record.nbr_travaille != 0 and record.taux_charge != 0:
+            if record.nbr_travaille != 0:
                 record['salaire_annuel'] = (record.cjm * record.nbr_travaille) / record.taux_charge
             else:
                 record['salaire_annuel'] = 0
@@ -71,6 +71,3 @@ class ContractInherit(models.Model):
                 record['cjm'] = (record['salaire_annuel'] * record.taux_charge) / record.nbr_travaille
             else:
                 record['cjm'] = 0
-
-
-
