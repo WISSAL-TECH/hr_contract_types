@@ -53,7 +53,7 @@ class ContractInherit(models.Model):
             else:
                 record['cjm'] = 0
 
-    @api.onchange('salaire_souhait')
+    @api.onchange('salaire_souhait' )
     def _onchange_test(self):
         if self.salaire_souhait < self.salaire_annuel:
             warning_msg = {
