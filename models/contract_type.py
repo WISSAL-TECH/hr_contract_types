@@ -5,7 +5,7 @@ import random
 import string
 from itertools import count
 import dateutil.rrule as rrule
-from odoo import api, fields, models,api
+from odoo import api, fields, models, api
 from datetime import date, time, timedelta
 from datetime import datetime
 
@@ -17,7 +17,6 @@ class ContractType(models.Model):
 
     name = fields.Char(string='Contract Type', required=True, help="Name")
     sequence = fields.Integer(help="Gives the sequence when displaying a list of Contract.", default=10)
-
 
 
 class ContractInherit(models.Model):
@@ -45,11 +44,11 @@ class ContractInherit(models.Model):
     @api.onchange('cjm', 'nbr_travaille', 'taux_charge')
     def _onchange_cout(self):
         for record in self:
-            if record.nbr_travaille != 0:
+            if record.nbr_travaille != 0 and record.taux_charge != 0:
                 record['salaire_annuel'] = (record.cjm * record.nbr_travaille) / record.taux_charge
             else:
                 record['salaire_annuel'] = 0
-            if record.taux_charge != 0:
+            if record.taux_charge != 0 and record.nbr_travaille != 0:
                 record['cjm'] = (record['salaire_annuel'] * record.taux_charge) / record.nbr_travaille
             else:
                 record['cjm'] = 0
