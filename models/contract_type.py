@@ -36,7 +36,7 @@ class ContractInherit(models.Model):
     wage = fields.Monetary(string="salaire de base")
 
     @api.onchange('cjm', 'nbr_travaille', 'taux_charge', 'inherit_partner_values')
-    def _onchange_cout(self):
+    def _onchange_cout_inherit(self):
         for record in self:
             if record.nbr_travaille != 0 and not record.inherit_partner_values:
                 record['salaire_annuel']
